@@ -1,0 +1,59 @@
+services:
+  app:
+    # build: ./app
+    image: node:26
+    container_name: routines_app
+    volumes:
+      - type: bind
+        source: ./app
+        target: /app
+    working_dir: /app
+    ports:
+      - '127.0.0.1:3000:5173'
+    command: npx vite --host
+    networks:
+      - frontend
+  mysql:
+    image: 'mysql:latest'
+    container_name: routines_db
+    environment:
+      - 'MYSQL_DATABASE={MYSQL_NAME}'
+      - 'MYSQL_PASSWORD={MYSQL_PASSWORD}'
+      - 'MYSQL_ROOT_PASSWORD={MYSQL_ROOT_PASSWORD}'
+      - 'MYSQL_USER={MYSQL_USER}'
+    ports:
+      - '3306'
+    volumes:
+      - type: volume
+        source: mysql_data
+        target: /var/lib/mysql
+    networks:
+      - backend
+  server:
+    # build: ./server
+    image: eclipse-temurin:25
+    depends_on:
+      - mysql
+    container_name: routines_server
+    volumes:
+      - type: bind
+        source: ./server
+        target: /server
+    working_dir: /server
+    ports:
+      - '8080:8080'
+    command: ./mvnw spring-boot:run
+    environment:
+      - 'DB_URL=jdbc:mysql://mysql:3306/{MYSQL_NAME}'
+      - 'DB_USERNAME={MYSQL_USER}'
+      - 'DB_PASSWORD={MYSQL_PASSWORD}'
+    networks:
+      - backend
+      - frontend
+
+volumes:
+  mysql_data:
+
+networks:
+  frontend:
+  backend:
