@@ -2,6 +2,9 @@ package com.routines.server.data.entities;
 
 import java.util.List;
 
+import org.hibernate.annotations.SoftDelete;
+
+import jakarta.annotation.Nullable;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,6 +16,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
 @Entity
+@SoftDelete
 public class Routine {
     
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -20,6 +24,8 @@ public class Routine {
 
     private String name;
     private String description;
+    @Nullable
+    private String imageURL;
 
     
     @ManyToOne

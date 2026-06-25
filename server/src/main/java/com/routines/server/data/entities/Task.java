@@ -2,9 +2,12 @@ package com.routines.server.data.entities;
 
 import java.util.List;
 
+import org.hibernate.annotations.SoftDelete;
+
 import jakarta.persistence.*;
 
 @Entity
+@SoftDelete
 public class Task {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -14,8 +17,12 @@ public class Task {
 
     private String description;
 
-    @ManyToMany
-    @JoinTable()
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+        name = "assigment",
+        joinColumns = @JoinColumn(name = "task_id"),
+        inverseJoinColumns = @JoinColumn(name = "routine_id")
+    )
     private List<Routine> routines;
 
     public Integer getId() {
