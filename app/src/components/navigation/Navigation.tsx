@@ -1,0 +1,66 @@
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import Drawer from '@mui/material/Drawer';
+import Button from '@mui/material/Button';
+import List from '@mui/material/List';
+import Divider from '@mui/material/Divider';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import HomeIcon from '@mui/icons-material/Home';
+import MenuIcon from '@mui/icons-material/Menu';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+
+export default function TemporaryDrawer() {
+  const [open, setOpen] = React.useState(false);
+
+  const toggleDrawer = (newOpen: boolean) => () => {
+    setOpen(newOpen);
+  };
+
+  const DrawerList = (
+    <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
+      <List>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                {<HomeIcon />}
+              </ListItemIcon>
+              <ListItemText primary="Home" />
+            </ListItemButton>
+          </ListItem>
+      </List>
+      <Divider />
+    </Box>
+  );
+
+  return (
+    <Box sx={{ flexGrow: 1 }}>
+        <AppBar position="static">
+            <Toolbar>
+                <IconButton
+                onClick={toggleDrawer(true)}
+                size="large"
+                edge="start"
+                color="inherit"
+                aria-label="menu"
+                sx={{ mr: 2 }}
+                >
+                <MenuIcon />
+                </IconButton>
+                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                    Routines
+                </Typography>
+                <Button color="inherit">Login</Button>
+            </Toolbar>
+            <Drawer open={open} onClose={toggleDrawer(false)}>
+                {DrawerList}
+            </Drawer>
+        </AppBar>
+    </Box>
+  );
+}
