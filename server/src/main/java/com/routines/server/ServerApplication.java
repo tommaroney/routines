@@ -17,7 +17,7 @@ public class ServerApplication {
 	}
 
 	@Bean
-    CommandLineRunner demo(UserRepository repository) {
+    CommandLineRunner seeder(UserRepository repository) {
         return (args) -> {
             // save a few customers
             repository.save(new User("webslinger@thedailybugle.com", "Peter", "Parker"));
