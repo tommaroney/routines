@@ -1,4 +1,4 @@
-import type { SubmitEvent } from 'react';
+import { useContext, type SubmitEvent } from 'react';
 
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -7,8 +7,11 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
 import type { Task } from '../../../types/Task';
+import { UserContext } from '../../../contexts/UserContext';
 
 export default function TaskFormDialog({ open, onClose }: { open: boolean; onClose: (task?: Task) => void }) {
+
+    const user = useContext(UserContext)!;
 
     function handleClose() {
         onClose();
@@ -18,7 +21,7 @@ export default function TaskFormDialog({ open, onClose }: { open: boolean; onClo
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
         const formJson = Object.fromEntries((formData as any).entries()) as Task;
-        fetch('/tasks', {
+        fetch('/api/tasks', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -37,6 +40,7 @@ export default function TaskFormDialog({ open, onClose }: { open: boolean; onClo
             <DialogTitle>New Task</DialogTitle>
             <DialogContent>
                 <form onSubmit={handleSubmit} id="task-form">
+                <TextField hidden name="userId" value={user.id} />
                 <TextField
                     autoFocus
                     required

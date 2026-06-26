@@ -14,6 +14,8 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
+import { UserContext, UserDispatchContext } from '../../contexts/UserContext';
+import { useContext } from 'react';
 
 export default function TemporaryDrawer() {
   const [open, setOpen] = React.useState(false);
@@ -21,6 +23,20 @@ export default function TemporaryDrawer() {
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
   };
+
+  const user = useContext(UserContext);
+  const dispatch = useContext(UserDispatchContext);
+
+  function logIn() {
+    dispatch({
+      type: 'log in',
+      payload: {
+        id: 1,
+        firstName: 'Peter',
+        lastName: 'Parker',
+        email: 'webslinger@thedailybugle'
+      }});
+  }
 
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
@@ -55,7 +71,11 @@ export default function TemporaryDrawer() {
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                     Routines
                 </Typography>
-                <Button color="inherit">Login</Button>
+                {
+                  user ? <Typography variant="h4">{user!.firstName} {user!.lastName}</Typography>
+                  :
+                  <Button onClick={logIn} color="inherit">Login</Button>
+                }
             </Toolbar>
             <Drawer open={open} onClose={toggleDrawer(false)}>
                 {DrawerList}

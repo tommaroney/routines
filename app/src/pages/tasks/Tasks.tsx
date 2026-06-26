@@ -10,11 +10,12 @@ import Paper from '@mui/material/Paper';
 import Typography from "@mui/material/Typography";
 import TaskFormDialog from "./components/TaskFormDialog";
 import Container from "@mui/material/Container";
+import TaskActionCard from "../../components/TaskActionCard";
 
 export default function Task() {
         const user = useContext(UserContext)
     
-        const [data, loading, error] = useFetch<Task[]>(`/tasks/user/${user!.id}`);
+        const [data, loading, error] = useFetch<Task[]>(`/api/user/${user!.id}/tasks`);
         const [open, setOpen] = useState(false);
         const [tasks, setTasks] = useState<Task[] | null>(null);
     
@@ -28,6 +29,7 @@ export default function Task() {
     
         function onClose(task?: Task) {
             if (task && tasks) setTasks([...tasks, task]);
+            setOpen(false);
         }
     
         return (
@@ -42,7 +44,7 @@ export default function Task() {
                     {loading && <p>Loading...</p>}
                     {error instanceof Error && <p>Error: {error.message}</p>}
                     {tasks && tasks.map(({name, description}: Task, index: number) => (
-                        <TaskActionAreaCard key={index} name={name} description={description} />
+                        <TaskActionCard key={index} name={name} description={description} />
                     ))}
                 </Container>
             </Paper>

@@ -10,23 +10,25 @@ export function useFetch<ResponseData>(url: string, options?: RequestInit): [Res
         const signal = controller.signal;
 
         try {
-            fetch(import.meta.env.BASE_URL + url, { ...options, signal }).then(async response => {
+            setLoading(true);
+            fetch(url, { ...options, signal }).then(async response => {
                 setData(await response.json());
+                setLoading(false);
+            }).catch(err => {
+                if (err instanceof Error && err.name === "AbortError") {
+                console.log("Fetch aborted");
+            }
             });
 
         } catch (err) {
-            if (err instanceof Error && err.name === "AbortError") {
-                console.log("Fetch aborted");
-            } else {
                 setError(err);
-            }
         } finally {
             setLoading(false);
         }
 
-        return () => {
-            controller.abort();
-        };
+        return (() => {
+            controller.abort('Component unmounted or depencies have changed');
+        });
 
     }, [url, options]);
 

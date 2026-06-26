@@ -1,28 +1,33 @@
-import { createContext, type ActionDispatch } from "react";
-import type { User, UserAction } from "../types/User";
+import { type ActionDispatch, createContext, useReducer } from 'react';
+import type { User, UserAction } from '../types/User';
+import Navigation from '../components/navigation/Navigation';
 
 export const UserContext = createContext<User | null>(null);
-export const UserDispatchContext = createContext<ActionDispatch<[action: any]> | null>(null);
+export const UserDispatchContext = createContext<ActionDispatch<[UserAction]>>(() => null as unknown as ActionDispatch<[UserAction]>);
 
-export function UserProvider({ children, user }: { children: React.ReactNode, user: User | null }) {
+export function UserProvider({ children }: { children: React.ReactNode }) {
+    
+    const [user, dispatch] = useReducer(userReducer, null);
+
     return (
         <UserContext value={user}>
+            <UserDispatchContext value={dispatch}>
+                <Navigation />
+            </UserDispatchContext>
             {children}
         </UserContext>
     );
 }
 
-export function UserDispatchProvider({ children, dispatch }: { children: React.ReactNode, dispatch: ActionDispatch<[action: any]> }) {
-    return (
-        <UserDispatchContext value={dispatch}>
-            {children}
-        </UserDispatchContext>
-    );
-}
-
 export function userReducer(user: User | null, action: UserAction): User | null {
     if (action.type === 'log in')
-        return { ...action.payload };
+        // console.log(action.payload);
+        if (action.payload)
+            return {
+                ...action.payload
+            };
+        else
+            return user;
 
     if (action.type === 'log out') return null;
 

@@ -1,5 +1,5 @@
 import Container from "@mui/material/Container";
-import RoutineActionCard from "../../components/RoutineActionAreaCard"
+import RoutineActionCard from "../../components/RoutineActionCard"
 import { useFetch } from "../../hooks/useFetch"
 import type { Routine } from "../../types/Routine"
 
