@@ -2,10 +2,14 @@ package com.routines.server.data.entities;
 
 import java.util.List;
 
+import org.hibernate.annotations.SoftDelete;
+
+import jakarta.annotation.Nullable;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
@@ -13,13 +17,17 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
 @Entity
+@SoftDelete
 public class Routine {
     
+    @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
 
     private String name;
     private String description;
+    @Nullable
+    private String imageURL;
 
     
     @ManyToOne
@@ -28,13 +36,13 @@ public class Routine {
 
     @ManyToMany
     @JoinTable(
-        name = "assigment",
+        name = "assignment",
         joinColumns = @JoinColumn(name = "routine_id"),
         inverseJoinColumns = @JoinColumn(name = "task_id")
     )
     private List<Task> tasks;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "assigment")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "routine")
     private List<Assignment> assignments;
 
     public Integer getId() {

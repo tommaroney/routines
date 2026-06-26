@@ -6,8 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.routines.server.data.entities.Task;
 
-public interface TaskRepository extends CrudRepository<Task, Integer> {
-
-    List<Task> findAllByRoutineId(Integer routineId);
-
+public interface TaskRepository extends CrudRepository<Task, Integer> {    
+    List<Task> findAllByUserId(Integer routineId);
 }
