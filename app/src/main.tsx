@@ -23,16 +23,16 @@ createRoot(document.getElementById('root')!).render(
       sx={containerStyle} 
       fixed
       disableGutters>
-      <UserProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<App />}>
-              <Route path="routines" element={<Routines />} />
-              <Route path="tasks" element={<Tasks />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </UserProvider>
+      <BrowserRouter>
+        <UserProvider>
+            <Routes>
+              <Route path="/" element={<App />}>
+                <Route path="routines" element={<Routines />} />
+                <Route path="tasks" element={<Tasks />} />
+              </Route>
+            </Routes>
+        </UserProvider>
+      </BrowserRouter>
     </Container>
   </StrictMode>,
 )
