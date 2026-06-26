@@ -27,7 +27,8 @@ export default function TemporaryDrawer() {
   const user = useContext(UserContext);
   const dispatch = useContext(UserDispatchContext);
 
-  function logIn() {
+  const logInHandler = (loginEvent: React.MouseEvent) => {
+    loginEvent.preventDefault();
     dispatch({
       type: 'log in',
       payload: {
@@ -55,32 +56,30 @@ export default function TemporaryDrawer() {
   );
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
-            <Toolbar>
-                <IconButton
-                onClick={toggleDrawer(true)}
-                size="large"
-                edge="start"
-                color="inherit"
-                aria-label="menu"
-                sx={{ mr: 2 }}
-                >
-                <MenuIcon />
-                </IconButton>
-                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                    Routines
-                </Typography>
-                {
-                  user ? <Typography variant="h4">{user!.firstName} {user!.lastName}</Typography>
-                  :
-                  <Button onClick={logIn} color="inherit">Login</Button>
-                }
-            </Toolbar>
-            <Drawer open={open} onClose={toggleDrawer(false)}>
-                {DrawerList}
-            </Drawer>
-        </AppBar>
-    </Box>
+    <AppBar position="static">
+        <Toolbar>
+            <IconButton
+            onClick={toggleDrawer(true)}
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            sx={{ mr: 2 }}
+            >
+            <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                Routines
+            </Typography>
+            {
+              user ? <Typography variant="h4">{user!.firstName} {user!.lastName}</Typography>
+              :
+              <Button onClick={logInHandler} color="inherit">Login</Button>
+            }
+        </Toolbar>
+        <Drawer open={open} onClose={toggleDrawer(false)}>
+            {DrawerList}
+        </Drawer>
+    </AppBar>
   );
 }

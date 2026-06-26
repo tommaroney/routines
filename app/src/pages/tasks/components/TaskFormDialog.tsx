@@ -21,7 +21,7 @@ export default function TaskFormDialog({ open, onClose }: { open: boolean; onClo
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
         const formJson = Object.fromEntries((formData as any).entries()) as Task;
-        fetch('/api/tasks', {
+        fetch(`/api/user/${user.id}/tasks`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

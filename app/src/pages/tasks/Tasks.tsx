@@ -6,11 +6,12 @@ import { useFetch } from "../../hooks/useFetch";
 import AddIcon from '@mui/icons-material/Add';
 import Divider from "@mui/material/Divider";
 import Fab from '@mui/material/Fab';
-import Paper from '@mui/material/Paper';
 import Typography from "@mui/material/Typography";
 import TaskFormDialog from "./components/TaskFormDialog";
 import Container from "@mui/material/Container";
 import TaskActionCard from "../../components/TaskActionCard";
+import Page from "../../components/Page";
+import Grid from "@mui/material/Grid";
 
 export default function Task() {
         const user = useContext(UserContext)
@@ -33,20 +34,28 @@ export default function Task() {
         }
     
         return (
-            <Paper>
-                <Typography variant="h1" gutterBottom sx={{ flexGrow: 1 }}>Tasks</Typography>
-                <Fab color="primary" aria-label="add" onClick={handleClickOpen}>
-                    <AddIcon />
-                </Fab>
+            <Page>
+                <Grid sx={{ alignItems: "center", justifyContent: "center"}} container spacing={2}>
+                    <Grid size={8} offset={2}>
+                        <Typography variant="h1" sx={{ flexGrow: 1 }}>Tasks</Typography>
+                    </Grid>
+                    <Grid size={2}>
+                        <Fab color="primary" aria-label="add" onClick={handleClickOpen}>
+                            <AddIcon />
+                        </Fab>
+                    </Grid>
+                </Grid>
                 <TaskFormDialog open={open} onClose={onClose}/>
                 <Divider variant="middle" />
-                <Container>
+                <Grid sx={{ padding: "20px 20px" }} container spacing={2}>
                     {loading && <p>Loading...</p>}
                     {error instanceof Error && <p>Error: {error.message}</p>}
                     {tasks && tasks.map(({name, description}: Task, index: number) => (
-                        <TaskActionCard key={index} name={name} description={description} />
+                        <Grid size={{ sm: 12, md: 6, lg: 4 }}>
+                            <TaskActionCard key={index} name={name} description={description} />
+                        </Grid>
                     ))}
-                </Container>
-            </Paper>
+                </Grid>
+            </Page>
         );
 }

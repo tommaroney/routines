@@ -32,6 +32,7 @@ services:
   server:
     # build: ./server
     image: eclipse-temurin:25
+    user: '1000:1000'
     depends_on:
       - database
     container_name: routines_server
