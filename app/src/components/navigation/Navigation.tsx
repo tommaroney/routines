@@ -52,6 +52,13 @@ export default function TemporaryDrawer() {
           </ListItem>
       </List>
       <Divider />
+        <List>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemText primary="Tasks" />
+            </ListItemButton>
+          </ListItem>
+        </List>
     </Box>
   );
 
