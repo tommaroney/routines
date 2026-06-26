@@ -16,6 +16,7 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { UserContext, UserDispatchContext } from '../../contexts/UserContext';
 import { useContext } from 'react';
+import { NavLink } from 'react-router';
 
 export default function TemporaryDrawer() {
   const [open, setOpen] = React.useState(false);
@@ -43,7 +44,7 @@ export default function TemporaryDrawer() {
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
       <List>
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton component={NavLink} to="/">
               <ListItemIcon>
                 {<HomeIcon />}
               </ListItemIcon>
@@ -54,7 +55,7 @@ export default function TemporaryDrawer() {
       <Divider />
         <List>
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton component={NavLink} to="/tasks">
               <ListItemText primary="Tasks" />
             </ListItemButton>
           </ListItem>
