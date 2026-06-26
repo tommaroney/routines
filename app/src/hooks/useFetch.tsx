@@ -12,8 +12,10 @@ export function useFetch<ResponseData>(url: string, options?: RequestInit): [Res
         try {
             setLoading(true);
             fetch(url, { ...options, signal }).then(async response => {
-                setData(await response.json());
-                setLoading(false);
+                if(!signal.aborted) {
+                    setData(await response.json());
+                    setLoading(false);
+                }
             }).catch(err => {
                 if (err instanceof Error && err.name === "AbortError") {
                 console.log("Fetch aborted");
