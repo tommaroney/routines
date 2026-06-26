@@ -2,6 +2,8 @@ package com.routines.server.data.repositiories;
 
 import org.springframework.data.repository.CrudRepository;
 
-public interface UserRepository extends CrudRepository {
+import com.routines.server.data.entities.User;
+
+public interface UserRepository extends CrudRepository<User, Integer> {
     
 }

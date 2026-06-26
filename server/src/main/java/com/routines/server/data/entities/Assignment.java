@@ -9,6 +9,7 @@ import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Assignment {
+    
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
