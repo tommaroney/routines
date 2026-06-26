@@ -13,16 +13,16 @@ services:
     command: npx vite --host
     networks:
       - frontend
-  mysql:
+  database:
     image: 'mysql:latest'
     container_name: routines_db
     environment:
-      - 'MYSQL_DATABASE={MYSQL_NAME}'
-      - 'MYSQL_PASSWORD={MYSQL_PASSWORD}'
-      - 'MYSQL_ROOT_PASSWORD={MYSQL_ROOT_PASSWORD}'
-      - 'MYSQL_USER={MYSQL_USER}'
+      MYSQL_DATABASE: ${MYSQL_NAME}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
     ports:
-      - '3306'
+      - '127.0.0.1:57563:3306'
     volumes:
       - type: volume
         source: mysql_data
@@ -33,7 +33,7 @@ services:
     # build: ./server
     image: eclipse-temurin:25
     depends_on:
-      - mysql
+      - database
     container_name: routines_server
     volumes:
       - type: bind
@@ -42,11 +42,11 @@ services:
     working_dir: /server
     ports:
       - '8080:8080'
-    command: ./mvnw spring-boot:run
+    command: ./mvnw spring-boot:run -Dspring.profiles.active=dev
     environment:
-      - 'DB_URL=jdbc:mysql://mysql:3306/{MYSQL_NAME}'
-      - 'DB_USERNAME={MYSQL_USER}'
-      - 'DB_PASSWORD={MYSQL_PASSWORD}'
+      - 'DB_URL=jdbc:mysql://database:3306/${MYSQL_NAME}'
+      - 'DB_USERNAME=${MYSQL_USER}'
+      - 'DB_PASSWORD=${MYSQL_PASSWORD}'
     networks:
       - backend
       - frontend
