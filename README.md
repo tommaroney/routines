@@ -7,6 +7,8 @@ Change the name of the file `.example.env` in the root folder to `.env`.
 Change the name of the file `.env.example` in the folder `/app` to `.env`.
 Update usernames, passwords, or port to connect to the MySQL server.
 Execute the command `docker compose up` in the terminal from the root of the project.
+`docker compose stop` will stop all of the containers.
+`docker compose down` will stop and destroy all of the containers.
 
 ## Use
 Navigate to localhost:3000
