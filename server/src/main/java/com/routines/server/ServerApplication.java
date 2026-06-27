@@ -20,7 +20,8 @@ public class ServerApplication {
     CommandLineRunner seeder(UserRepository repository) {
         return (args) -> {
             // save a few customers
-            repository.save(new User("webslinger@thedailybugle.com", "Peter", "Parker"));
+            if (repository.count() < 1)
+                repository.save(new User("webslinger@thedailybugle.com", "Peter", "Parker"));
 		};
     }
 
