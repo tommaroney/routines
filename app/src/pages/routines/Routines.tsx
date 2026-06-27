@@ -6,11 +6,11 @@ import type { Routine } from "../../types/Routine"
 import AddIcon from '@mui/icons-material/Add';
 import Divider from "@mui/material/Divider";
 import Fab from '@mui/material/Fab';
-import Paper from '@mui/material/Paper';
 import Typography from "@mui/material/Typography";
 import { useContext, useEffect, useState } from "react";
 import RoutineFormDialog from "./components/RoutineFormDialog";
 import { UserContext } from "../../contexts/UserContext";
+import Page from "../../components/Page";
 
 
 export default function Routines() {
@@ -33,7 +33,7 @@ export default function Routines() {
     }
 
     return (
-        <Paper>
+        <Page>
             <Typography variant="h1" gutterBottom sx={{ flexGrow: 1 }}>Routines</Typography>
             <Fab color="primary" aria-label="add" onClick={handleClickOpen}>
                 <AddIcon />
@@ -47,7 +47,7 @@ export default function Routines() {
                     <RoutineActionCard key={index} name={name} description={description} />
                 ))}
             </Container>
-        </Paper>
+        </Page>
     );
 
 

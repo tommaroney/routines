@@ -40,7 +40,6 @@ export default function TaskFormDialog({ open, onClose }: { open: boolean; onClo
             <DialogTitle>New Task</DialogTitle>
             <DialogContent>
                 <form onSubmit={handleSubmit} id="task-form">
-                <TextField hidden name="userId" value={user.id} />
                 <TextField
                     autoFocus
                     required
@@ -53,17 +52,16 @@ export default function TaskFormDialog({ open, onClose }: { open: boolean; onClo
                     variant="standard"
                 />
                 <TextField
-                    autoFocus
                     margin="dense"
                     id="description"
                     name="description"
                     label="Description"
-                    type="text"
+                    multiline
+                    rows={4}
                     fullWidth
                     variant="standard"
                 />
-                <TextField
-                    autoFocus
+                {/* <TextField
                     margin="dense"
                     id="imageURL"
                     name="imageURL"
@@ -71,7 +69,7 @@ export default function TaskFormDialog({ open, onClose }: { open: boolean; onClo
                     type="text"
                     fullWidth
                     variant="standard"
-                />
+                /> */}
                 </form>
             </DialogContent>
             <DialogActions>
