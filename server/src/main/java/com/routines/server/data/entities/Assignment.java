@@ -1,5 +1,7 @@
 package com.routines.server.data.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,10 +21,12 @@ public class Assignment {
 
     @ManyToOne
     @JoinColumn(name = "task_id", referencedColumnName = "id")
+    @JsonBackReference
     private Task task;
 
     @ManyToOne
     @JoinColumn(name = "routine_id", referencedColumnName = "id")
+    @JsonBackReference
     private Routine routine;
 
     public Integer getId() {

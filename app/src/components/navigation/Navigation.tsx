@@ -60,6 +60,13 @@ export default function TemporaryDrawer() {
             </ListItemButton>
           </ListItem>
         </List>
+        <List>
+          <ListItem disablePadding>
+            <ListItemButton component={NavLink} to="/Routines">
+              <ListItemText primary="Routines" />
+            </ListItemButton>
+          </ListItem>
+        </List>
     </Box>
   );
 

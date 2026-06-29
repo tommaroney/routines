@@ -1,8 +1,8 @@
 package com.routines.server.data.entities;
 
-import java.util.List;
-
 import org.hibernate.annotations.SoftDelete;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.*;
 
@@ -18,16 +18,17 @@ public class Task {
 
     private String description;
 
-    @ManyToOne
+    @ManyToOne()
+    @JsonBackReference
     private User user;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-        name = "assignment",
-        joinColumns = @JoinColumn(name = "task_id"),
-        inverseJoinColumns = @JoinColumn(name = "routine_id")
-    )
-    private List<Routine> routines;
+    // @ManyToMany(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
+    // @JoinTable(
+    //     name = "assignment",
+    //     joinColumns = @JoinColumn(name = "task_id"),
+    //     inverseJoinColumns = @JoinColumn(name = "routine_id")
+    // )
+    // private List<Routine> routines;
 
     public Integer getId() {
         return id;
@@ -57,7 +58,7 @@ public class Task {
         this.user = user;
     }
 
-    public List<Routine> getRoutines() {
-        return routines;
-    }
+    // public List<Routine> getRoutines() {
+    //     return routines;
+    // }
 }

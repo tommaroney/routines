@@ -5,21 +5,20 @@ import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
 
 type Props = {
-    imageSrc?: string;
+    imageUrl?: string;
     name: string;
     description: string;
 }
 
-export default function RoutineActionCard({imageSrc, name, description}: Props) {
+export default function RoutineActionCard({imageUrl, name, description}: Props) {
     return (
         <Card sx={{ maxWidth: 345 }}>
             <CardActionArea>
-                {imageSrc ?? 
+                {imageUrl && 
                     <CardMedia
                     component="img"
                     height="140"
-                    src={imageSrc}
-                    alt="green iguana"
+                    src={imageUrl}
                     />
                 }
                 <CardContent>
