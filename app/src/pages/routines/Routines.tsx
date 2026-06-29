@@ -1,52 +1,50 @@
-import Container from "@mui/material/Container";
 import RoutineActionCard from "../../components/RoutineActionCard"
 import { useFetch } from "../../hooks/useFetch"
 import type { Routine } from "../../types/Routine"
 
-import AddIcon from '@mui/icons-material/Add';
 import Divider from "@mui/material/Divider";
-import Fab from '@mui/material/Fab';
-import Typography from "@mui/material/Typography";
 import { useContext, useEffect, useState } from "react";
 import RoutineFormDialog from "./components/RoutineFormDialog";
 import { UserContext } from "../../contexts/UserContext";
 import Page from "../../components/Page";
+import PageTitleArea from "../../components/PageTitleArea";
+import Grid from "@mui/material/Grid";
 
 
 export default function Routines() {
     const user = useContext(UserContext)
 
-    const [data, loading, error] = useFetch<Routine[]>(`/routines/user/${user!.id}`);
+    const [data, loading, error] = useFetch<Routine[]>(`/api/user/${user!.id}/routines`);
     const [open, setOpen] = useState(false);
-    const [routines, setRoutines] = useState<Routine[] | null>(null);
+    const [routines, setRoutines] = useState<Routine[]>([]);
 
     useEffect(() => {
-        setRoutines(data);
-    }, [data])
+        if (data) setRoutines(data);
+    }, [data]);
     
-    const handleClickOpen = () => {
+    const openDialog = () => {
         setOpen(true);
     };
 
     function onClose(routine?: Routine) {
         if (routine && routines) setRoutines([...routines, routine]);
+        setOpen(false);
     }
 
     return (
         <Page>
-            <Typography variant="h1" gutterBottom sx={{ flexGrow: 1 }}>Routines</Typography>
-            <Fab color="primary" aria-label="add" onClick={handleClickOpen}>
-                <AddIcon />
-            </Fab>
+            <PageTitleArea onNewClick={openDialog} pageTitle={"Routines"}/>
             <RoutineFormDialog open={open} onClose={onClose}/>
             <Divider variant="middle" />
-            <Container>
+            <Grid sx={{ padding: "20px" }} container spacing={2}>
                 {loading && <p>Loading...</p>}
                 {error instanceof Error && <p>Error: {error.message}</p>}
-                {routines && routines.map(({name, description}: Routine, index: number) => (
-                    <RoutineActionCard key={index} name={name} description={description} />
+                {routines.map(({name, description, imageUrl}: Routine, index: number) => (
+                    <Grid key={index} size={{ sm: 12, md: 6, lg: 4 }}>
+                        <RoutineActionCard name={name} description={description} imageUrl={imageUrl}/>
+                    </Grid>
                 ))}
-            </Container>
+            </Grid>
         </Page>
     );
 

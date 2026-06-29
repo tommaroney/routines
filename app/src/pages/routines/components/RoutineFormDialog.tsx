@@ -1,4 +1,4 @@
-import type { SubmitEvent } from 'react';
+import { useContext, type SubmitEvent } from 'react';
 
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -7,8 +7,11 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
 import type { Routine } from '../../../types/Routine';
+import { UserContext } from '../../../contexts/UserContext';
 
 export default function RoutineFormDialog({ open, onClose }: { open: boolean; onClose: (routine?: Routine) => void }) {
+
+    const user = useContext(UserContext)!;
 
     function handleClose() {
         onClose();
@@ -18,7 +21,7 @@ export default function RoutineFormDialog({ open, onClose }: { open: boolean; on
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
         const formJson = Object.fromEntries((formData as any).entries()) as Routine;
-        fetch('/routines', {
+        fetch(`/api/user/${user.id}/routines`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -61,8 +64,8 @@ export default function RoutineFormDialog({ open, onClose }: { open: boolean; on
                 <TextField
                     autoFocus
                     margin="dense"
-                    id="imageURL"
-                    name="imageURL"
+                    id="imageUrl"
+                    name="imageUrl"
                     label="Image URL"
                     type="text"
                     fullWidth

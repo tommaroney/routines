@@ -4,6 +4,9 @@ import java.util.List;
 
 import org.hibernate.annotations.SoftDelete;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.annotation.Nullable;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -27,11 +30,12 @@ public class Routine {
     private String name;
     private String description;
     @Nullable
-    private String imageURL;
+    private String imageUrl;
 
     
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(nullable = false)
+    @JsonBackReference
     private User user;
 
     @ManyToMany
@@ -43,6 +47,7 @@ public class Routine {
     private List<Task> tasks;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "routine")
+    @JsonManagedReference
     private List<Assignment> assignments;
 
     public Integer getId() {
@@ -69,7 +74,19 @@ public class Routine {
         return user;
     }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public List<Task> getTasks() {
         return tasks;
+    }
+
+    public String getImageUrl() {
+        return this.imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
