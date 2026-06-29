@@ -14,7 +14,10 @@ Execute the command `docker compose up` in the terminal from the root of the pro
 Navigate to localhost:3000
 Click the login button.  This is setup to simulate login right now.
 From the navigation menu, select Tasks
-Click the `+` to add new tasks.  The tasks will persist through the end of the session.
+Click the `+` to add new tasks.
+
+From the navigation menu, select Routines
+Click the `+' to add new Routines.
 
 ## DB Connection
 As configured in the .example.env file, the MySQL server can be reached at 127.0.0.1:57563 using
